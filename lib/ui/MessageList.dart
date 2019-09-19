@@ -7,10 +7,11 @@ class MessageList extends StatefulWidget {
 }
 
 class MessageListState extends State<MessageList>
-    {
+    with TickerProviderStateMixin {
   final TextEditingController _textController =
       new TextEditingController(); //new
   final List<Message> _messages = <Message>[];
+  AnimationController animationController;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -21,13 +22,13 @@ class MessageListState extends State<MessageList>
       body: new Column(
         children: <Widget>[
           new Flexible(
-              child: ListView.builder(
-                  padding: new EdgeInsets.all(8.0),
-                  reverse: true,
-                  itemBuilder: (_, int index) => _messages[index],
-                  itemCount: _messages.length,
-                ),
-              ),
+            child: ListView.builder(
+              padding: new EdgeInsets.all(8.0),
+              reverse: true,
+              itemBuilder: (_, int index) => _messages[index],
+              itemCount: _messages.length,
+            ),
+          ),
           new Divider(
             height: 1.0,
           ),
@@ -73,6 +74,10 @@ class MessageListState extends State<MessageList>
     _textController.clear();
     Message message = new Message(
       text: text,
+      animationController: new AnimationController(
+        duration: new Duration(milliseconds: 700), //new
+        vsync: this, //new
+      ),
       mar: 50.0,
     );
     setState(() {

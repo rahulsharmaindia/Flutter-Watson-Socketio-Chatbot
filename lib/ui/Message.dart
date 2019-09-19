@@ -8,9 +8,11 @@ class Message extends StatelessWidget {
   final double mar;
   @override
   Widget build(BuildContext context) {
-
     //double c_width = MediaQuery.of(context).size.width * 0.7;
-    return new Padding(
+    return new FadeTransition(
+      opacity: CurvedAnimation(
+          parent: animationController, curve: Curves.easeIn), //new
+      child: new Padding(
         padding: EdgeInsets.fromLTRB(0.0, 10.0, mar, 0.0),
         child: new Card(
           elevation: 1.0,
@@ -41,6 +43,7 @@ class Message extends StatelessWidget {
             ),
           ),
         ),
+      ),
     );
   }
 }
