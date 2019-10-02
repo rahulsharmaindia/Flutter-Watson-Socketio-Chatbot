@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Message extends StatelessWidget {
-  Message({this.text, this.animationController, this.mar});
+class MessageItem extends StatelessWidget {
+  MessageItem({this.text, this.isRobot});
   final String text;
-  final AnimationController animationController;
   final String _name = "Rahul";
-  final double mar;
+  final bool isRobot;
   @override
   Widget build(BuildContext context) {
     //double c_width = MediaQuery.of(context).size.width * 0.7;
-    return new FadeTransition(
-      opacity: CurvedAnimation(
-          parent: animationController, curve: Curves.easeIn), //new
-      child: new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 10.0, mar, 0.0),
+    return new Padding(
+        padding: EdgeInsets.fromLTRB(isRobot?50.0:0.0, 10.0, isRobot?0.0:50.0, 0.0),
         child: new Card(
           elevation: 1.0,
           color: const Color(0xFFFFFFFF),
@@ -43,7 +39,6 @@ class Message extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }

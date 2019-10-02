@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:chatbot/Constants.dart';
-import 'package:chatbot/ui/ContactScreen.dart';
+import 'package:chatbot/ui/ChatbotSelection.dart';
 import 'package:chatbot/ui/ChatScreen.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case contactsRoute:
-        return MaterialPageRoute(builder: (_) => ContactScreen());
+        return MaterialPageRoute(builder: (_) => ChatbotSelection());
       case chatRoute:
         var data = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => ChatScreen(data));

@@ -1,50 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:chatbot/ui/Message.dart';
+import 'package:chatbot/notifier/MessageNotifier.dart';
+import 'package:provider/provider.dart';
+import 'package:chatbot/ui/MessageItem.dart';
+import 'package:chatbot/model/MessageModel.dart';
 
-class MessageList extends StatefulWidget {
-  @override
-  State createState() => new MessageListState();
-}
-
-class MessageListState extends State<MessageList>
-    with TickerProviderStateMixin {
+class MessageList extends StatelessWidget {
   final TextEditingController _textController =
       new TextEditingController(); //new
-  final List<Message> _messages = <Message>[];
-  AnimationController animationController;
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        centerTitle: true,
-        title: new Text('AI ChatBot'),
-      ),
-      body: new Column(
-        children: <Widget>[
-          new Flexible(
-            child: ListView.builder(
-              padding: new EdgeInsets.all(8.0),
-              reverse: true,
-              itemBuilder: (_, int index) => _messages[index],
-              itemCount: _messages.length,
+    final messages = Provider.of<MessageNotifier>(context);
+    return new Column(
+      children: <Widget>[
+        new Flexible(
+          child: ListView.builder(
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, int index) => MessageItem(
+              isRobot: messages.items[index].isRobot,
+              text: messages.items[index].text,
             ),
+            itemCount: messages.items.length,
           ),
-          new Divider(
-            height: 1.0,
-          ),
-          new Container(
-            decoration: new BoxDecoration(color: Theme.of(context).cardColor),
-            child: _buildTextComposer(),
-          )
-        ],
-      ),
+        ),
+        new Divider(
+          height: 1.0,
+        ),
+        new Container(
+          decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+          child: _buildTextComposer(context, messages),
+        )
+      ],
     );
   }
 
-  Widget _buildTextComposer() {
+  Widget _buildTextComposer(context, messages) {
     return new IconTheme(
       //new
-      data: new IconThemeData(color: Theme.of(context).accentColor), //new
+      data: new IconThemeData(color: Theme.of(context).primaryColor), //new
       child: new Container(
         //modified
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -53,7 +46,7 @@ class MessageListState extends State<MessageList>
             new Flexible(
               child: new TextField(
                 controller: _textController,
-                onSubmitted: _handleSubmitted,
+                //onSubmitted: _handleSubmitted(_textController.text, messages),
                 decoration:
                     new InputDecoration.collapsed(hintText: "Send a message"),
               ),
@@ -62,7 +55,8 @@ class MessageListState extends State<MessageList>
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                   icon: new Icon(Icons.send),
-                  onPressed: () => _handleSubmitted(_textController.text)),
+                  onPressed: () =>
+                      _handleSubmitted(_textController.text, messages)),
             ),
           ],
         ),
@@ -70,27 +64,8 @@ class MessageListState extends State<MessageList>
     );
   }
 
-  void _handleSubmitted(String text) {
+  void _handleSubmitted(String text, messages) {
     _textController.clear();
-    Message message = new Message(
-      text: text,
-      animationController: new AnimationController(
-        duration: new Duration(milliseconds: 700), //new
-        vsync: this, //new
-      ),
-      mar: 50.0,
-    );
-    setState(() {
-      _messages.insert(0, message);
-    });
-    message.animationController.forward();
-  }
-
-  @override
-  void dispose() {
-    //new
-    for (Message message in _messages) //new
-      message.animationController.dispose(); //new
-    super.dispose(); //new
+    messages.add(new Message(isRobot: false, text: text));
   }
 }
