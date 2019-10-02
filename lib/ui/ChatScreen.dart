@@ -15,6 +15,7 @@ class ChatScreen extends StatelessWidget {
           title: new Text(name),
         ),
         body: new ChangeNotifierProvider(
-            builder: (context) => MessageNotifier(target:name), child: new MessageList()));
+            builder: (context) => MessageNotifier(target: name),
+            child: new MessageList(target: name)));
   }
 }

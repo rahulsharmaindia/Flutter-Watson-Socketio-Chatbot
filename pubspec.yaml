@@ -47,7 +47,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/
-    - assets/credentials_GCP.json
+    - assets/NewAgent-Google.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

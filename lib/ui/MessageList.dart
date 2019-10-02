@@ -5,6 +5,8 @@ import 'package:chatbot/ui/MessageItem.dart';
 import 'package:chatbot/model/MessageModel.dart';
 
 class MessageList extends StatelessWidget {
+  MessageList({this.target});
+  final String target;
   final TextEditingController _textController =
       new TextEditingController(); //new
   @override
@@ -19,6 +21,7 @@ class MessageList extends StatelessWidget {
             itemBuilder: (_, int index) => MessageItem(
               isRobot: messages.items[index].isRobot,
               text: messages.items[index].text,
+              target:target
             ),
             itemCount: messages.items.length,
           ),

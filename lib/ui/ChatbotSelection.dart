@@ -14,8 +14,6 @@ class ChatbotSelection extends StatelessWidget {
           body: new Column(children: <Widget>[
             new ChatbotItem(iconPath: WATSON_ICON_PATH,name:"Customer Care"),
             new ChatbotItem(iconPath: GOOLE_DIALOG_ICON_PATH, name:"Google Assistent"),
-            new ChatbotItem(iconPath: WATSON_ICON_PATH,name:"Financial Assistant"),
-            new ChatbotItem(iconPath: WATSON_ICON_PATH,name:"Watson Assistant"),
           ]),
         ),
     );

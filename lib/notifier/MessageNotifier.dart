@@ -8,7 +8,7 @@ class MessageNotifier with ChangeNotifier {
   final String target;
   List<Message> get items => List.of(_messages.reversed);
   MessageNotifier({this.target}) {
-    if (target == "Watson Assistant") {
+    if (target == "Customer Care") {
       // Let's initialize the WebSockets communication
       sockets.initCommunication();
 
@@ -17,7 +17,7 @@ class MessageNotifier with ChangeNotifier {
     }
   }
   void add(Message message) {
-    if (target == "Watson Assistant") {
+    if (target == "Customer Care") {
       sockets.send(message.text);
     } else {
       dialogResponse(message.text);
@@ -41,10 +41,14 @@ class MessageNotifier with ChangeNotifier {
 
   void dialogResponse(query) async {
     AuthGoogle authGoogle =
-        await AuthGoogle(fileJson: "assets/credentials_GCP.json").build();
+        await AuthGoogle(fileJson: "assets/NewAgent-Google.json").build();
     Dialogflow dialogflow =
         Dialogflow(authGoogle: authGoogle, language: Language.english);
-    AIResponse response = await dialogflow.detectIntent(query);
-    addGMRobotMsg(response.getMessage());
+    try {
+      AIResponse response = await dialogflow.detectIntent(query);
+      addGMRobotMsg(response.getMessage());
+    } catch (e) {
+      print("Problem while getting response" + e);
+    }
   }
 }
