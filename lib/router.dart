@@ -6,9 +6,9 @@ import 'package:chatbot/ui/ChatScreen.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case contactsRoute:
+      case CONTACTSROUTE:
         return MaterialPageRoute(builder: (_) => ChatbotSelection());
-      case chatRoute:
+      case CHATROUTE:
         var data = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => ChatScreen(data));
       default:

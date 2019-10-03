@@ -4,7 +4,7 @@ import 'package:web_socket_channel/io.dart';
 ///
 /// Application-level global variable to access the WebSockets
 ///
-WebSocketsNotifications sockets = new WebSocketsNotifications();
+final WebSocketsNotifications sockets = new WebSocketsNotifications();
 
 ///
 /// Put your WebSockets server IP address and port number
@@ -12,13 +12,13 @@ WebSocketsNotifications sockets = new WebSocketsNotifications();
 const String _SERVER_ADDRESS = "wss://watson-chat-server-demo.herokuapp.com/";
 
 class WebSocketsNotifications {
-  static final WebSocketsNotifications _sockets = new WebSocketsNotifications._internal();
+  //static final WebSocketsNotifications _sockets = new WebSocketsNotifications._internal();
 
-  factory WebSocketsNotifications(){
+  /* factory WebSocketsNotifications(){
     return _sockets;
-  }
+  } */
 
-  WebSocketsNotifications._internal();
+ // WebSocketsNotifications._internal();
 
   ///
   /// The WebSocket "open" channel
@@ -41,6 +41,7 @@ class WebSocketsNotifications {
   /// Initialization the WebSockets connection with the server
   /// ----------------------------------------------------------
   initCommunication() async {
+    print("Socket Initialization Started ****************************");
     ///
     /// Just in case, close any previous communication
     ///
@@ -58,11 +59,9 @@ class WebSocketsNotifications {
       _channel.stream.listen(_onReceptionOfMessageFromServer);
       _isOn = true;
     } catch(e){
+      _isOn = true;
+      print("Socket Initialization Exception ****************************");
       print(e);
-      ///
-      /// General error handling
-      /// TODO
-      ///
     }
   }
 
@@ -74,6 +73,7 @@ class WebSocketsNotifications {
       if (_channel.sink != null){
         _channel.sink.close();
         _isOn = false;
+        print("Socket Reset ****************************");
       }
     }
   }
@@ -84,6 +84,7 @@ class WebSocketsNotifications {
   send(String message){
     if (_channel != null){
       if (_channel.sink != null && _isOn){
+        print("Sending Message ****************************   "+message);
         _channel.sink.add(message);
       }
     }
@@ -95,9 +96,11 @@ class WebSocketsNotifications {
   /// ---------------------------------------------------------
   addListener(Function callback){
     _listeners.add(callback);
+    print("Listener added ****************************");
   }
   removeListener(Function callback){
     _listeners.remove(callback);
+    print("Listener Removed ****************************");
   }
 
   /// ----------------------------------------------------------

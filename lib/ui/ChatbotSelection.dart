@@ -6,16 +6,16 @@ class ChatbotSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          centerTitle: true,
-          title: new Text('AI ChatBot'),
-        ),
-        body: new Scaffold(
-          body: new Column(children: <Widget>[
-            new ChatbotItem(iconPath: WATSON_ICON_PATH,name:"Customer Care"),
-            new ChatbotItem(iconPath: GOOLE_DIALOG_ICON_PATH, name:"Google Assistent"),
-          ]),
-        ),
+      appBar: new AppBar(
+        centerTitle: true,
+        title: new Text('AI ChatBot'),
+      ),
+      body: new ListView(
+        children: <Widget>[
+          new ChatbotItem(iconPath: WATSON_ICON_PATH, target: WATSON_ASSISTANT),
+          new ChatbotItem(iconPath: GOOLE_DIALOG_ICON_PATH, target: GOOGLE_ASSISTANT),
+        ],
+      ),
     );
   }
 }

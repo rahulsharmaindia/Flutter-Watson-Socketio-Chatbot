@@ -5,7 +5,7 @@ import 'package:chatbot/Constants.dart';
 
 void main() => runApp(new MaterialApp(
     onGenerateRoute: Router.generateRoute,
-    initialRoute: contactsRoute,
+    initialRoute: CONTACTSROUTE,
     title: 'AI ChatBot',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(

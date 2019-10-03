@@ -19,10 +19,9 @@ class MessageList extends StatelessWidget {
             padding: new EdgeInsets.all(8.0),
             reverse: true,
             itemBuilder: (_, int index) => MessageItem(
-              isRobot: messages.items[index].isRobot,
-              text: messages.items[index].text,
-              target:target
-            ),
+                isRobot: messages.items[index].isRobot,
+                text: messages.items[index].text,
+                target: target),
             itemCount: messages.items.length,
           ),
         ),
@@ -63,7 +62,7 @@ class MessageList extends StatelessWidget {
             ),
           ],
         ),
-      ), //new
+      ),
     );
   }
 

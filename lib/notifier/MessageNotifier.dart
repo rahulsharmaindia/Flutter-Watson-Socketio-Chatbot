@@ -2,22 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:chatbot/model/MessageModel.dart';
 import 'package:chatbot/controller/SocketController.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:chatbot/Constants.dart';
 
 class MessageNotifier with ChangeNotifier {
   final List<Message> _messages = [];
   final String target;
   List<Message> get items => List.of(_messages.reversed);
   MessageNotifier({this.target}) {
-    if (target == "Customer Care") {
+    if (target == WATSON_ASSISTANT) {
+      print("watson notifier initialized ****************************");
       // Let's initialize the WebSockets communication
       sockets.initCommunication();
 
       // and ask to be notified as soon as a message comes in
       sockets.addListener(this.addRobotMsg);
     }
+    print("notifier initialized ****************************"+this.hashCode.toString());
   }
   void add(Message message) {
-    if (target == "Customer Care") {
+    if (target == WATSON_ASSISTANT) {
       sockets.send(message.text);
     } else {
       dialogResponse(message.text);
@@ -46,9 +49,16 @@ class MessageNotifier with ChangeNotifier {
         Dialogflow(authGoogle: authGoogle, language: Language.english);
     try {
       AIResponse response = await dialogflow.detectIntent(query);
+      print("got response*****************************************"+this.hashCode.toString());
       addGMRobotMsg(response.getMessage());
     } catch (e) {
       print("Problem while getting response" + e);
     }
+  }
+  @override
+  void dispose() {
+    print("notifier disposed*****************************************"+this.hashCode.toString());
+    super.dispose();
+    sockets.removeListener(this.addRobotMsg);
   }
 }

@@ -5,17 +5,18 @@ import 'package:chatbot/notifier/MessageNotifier.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
-  final String name;
-  ChatScreen(this.name);
+  final String target;
+  ChatScreen(this.target);
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      //resizeToAvoidBottomPadding: false ,
         appBar: new AppBar(
           centerTitle: true,
-          title: new Text(name),
+          title: new Text(target),
         ),
         body: new ChangeNotifierProvider(
-            builder: (context) => MessageNotifier(target: name),
-            child: new MessageList(target: name)));
+            builder: (context) => MessageNotifier(target: target),
+            child: new MessageList(target: target)));
   }
 }
